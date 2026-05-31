@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String            @id
+  username         String            @unique
+  ageRange         AgeRange
+  gender           Gender?
+  city             String
+  country          String
+  dreams           Dream[]
+  sentRequests     FriendRequest[]   @relation("SentRequests")
+  receivedRequests FriendRequest[]   @relation("ReceivedRequests")
+  favoriteDreams   Dream[]           @relation("Favorites")
+  friends          Friend[]          @relation("UserFriends_user")
+  friendedBy       Friend[]          @relation("UserFriends_friend")
+  description      String?           @db.Text
+  profilePicture   String?           @db.Text
+  interpretations  DreamInterpretation[]
+}
+
+enum Gender {
+    MALE
+    FEMALE
+    OTHER
+    PREFER_NOT_TO_SAY
+}
+
+enum AgeRange {
+    UNDER_18
+    AGE_18_24
+    AGE_25_34
+    AGE_35_49
+    AGE_50_PLUS
+    PREFER_NOT_TO_SAY
+}
+
+model Dream {
+  id              String     @id @default(cuid())
+  userId          String
+  user            User       @relation(fields: [userId], references: [id])
+  title           String
+  content         String     @db.Text
+  dreamCity       String
+  dreamCountry    String
+  dreamLat        Float?
+  dreamLng        Float?
+  private         Boolean    @default(false)
+  tags            Tag[]      @relation("DreamTags") // Dreams can have many Tags
+  symbols         Symbol[]   @relation("DreamSymbols")
+  emotions        Emotion[]  @relation("DreamEmotions")
+  createdAt       DateTime   @default(now())
+  favoritedBy     User[]     @relation("Favorites")
+  interpretation  DreamInterpretation?
+}
+
+model DreamInterpretation {
+  id                String                @id @default(cuid())
+  userId            String
+  dreamId           String                @unique
+  rawText           String                @db.Text
+  archetypes        String[]
+  myth_parallels    String[]
+  status            InterpretationStatus  @default(PENDING)
+  createdAt         DateTime              @default(now())
+  dream             Dream                 @relation(fields: [dreamId], references: [id])
+  user              User                  @relation(fields: [userId],  references: [id])
+}
+
+enum InterpretationStatus {
+    PENDING
+    PROCESSING
+    COMPLETE
+    FAILED
+}
+
+model FriendRequest {
+  id        String               @id @default(cuid())
+  fromId    String
+  toId      String
+  status    FriendRequestStatus  @default(PENDING)
+  createdAt DateTime             @default(now())
+  from      User                 @relation("SentRequests", fields: [fromId], references: [id])
+  to        User                 @relation("ReceivedRequests", fields: [toId], references: [id])
+  @@unique([fromId, toId])
+}
+
+enum FriendRequestStatus {
+    PENDING
+    ACCEPTED
+    DECLINED
+}
+
+model Tag {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  dreams Dream[] @relation("DreamTags")
+}
+
+model Symbol {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  dreams Dream[] @relation("DreamSymbols")
+}
+
+model Emotion {
+    id     String  @id  @default(cuid())
+    name   String  @unique
+    dreams Dream[] @relation("DreamEmotions")
+}
+
+model Friend {
+  id         String   @id @default(cuid())
+  userId     String
+  friendId   String
+  createdAt  DateTime @default(now())
+  user   User @relation("UserFriends_user", fields: [userId], references: [id])
+  friend User @relation("UserFriends_friend", fields: [friendId], references: [id])
+  @@unique([userId, friendId])
+}
+
+model CityStats {
+    id                String       @id @default(cuid())
+    city              String
+    country           String
+    lat               Float
+    lng               Float
+    dreamCount        Int          @default(0)
+    topSymbols        String[]
+    dominantEmotion   String?
+    periodStart       DateTime
+    periodEnd         DateTime
+    updatedAt         DateTime     @updatedAt
+    @@unique([city, country, periodStart])
+}
