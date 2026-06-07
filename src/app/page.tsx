@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { myths } from "@/data/myths";
+// import { myths } from "@/data/myths";
 import MythCard from "@/components/MythCard";
 
 const FEATURED_IDS = ["medusa", "ouroboros", "baba-yaga", "the-backrooms", "odin", "mirror-symbol"];
 
 export default function Home() {
-  const featured = FEATURED_IDS.map((id) => myths.find((m) => m.id === id)).filter(Boolean);
+  // const featured = FEATURED_IDS.map((id) => myths.find((m) => m.id === id)).filter(Boolean);
 
   return (
     <div className="ambient-dark min-h-screen">
@@ -34,12 +34,12 @@ export default function Home() {
           >
             Explore Myths
           </Link>
-          <Link
+          {/* <Link
             href="/graph"
             className="rounded-full border border-white/20 px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
           >
             View Graph
-          </Link>
+          </Link> */}
           <Link
             href="/dream-journal"
             className="rounded-full border border-violet-500/40 px-8 py-3 text-sm font-semibold text-violet-300 transition-colors hover:bg-violet-500/10"
@@ -54,17 +54,17 @@ export default function Home() {
         <h2 className="mb-8 text-xl font-bold tracking-wide text-slate-300">
           ✦ Featured Entries
         </h2>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {/* <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((myth) => myth && <MythCard key={myth.id} myth={myth} />)}
-        </div>
-        <div className="mt-10 text-center">
+        </div> */}
+        {/* <div className="mt-10 text-center">
           <Link
             href="/explore"
             className="text-sm text-violet-400 underline underline-offset-4 hover:text-violet-300"
           >
             View all {myths.length} entries →
           </Link>
-        </div>
+        </div> */}
       </section>
 
       {/* Theme pills */}
