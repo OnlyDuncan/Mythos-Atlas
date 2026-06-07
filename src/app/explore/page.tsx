@@ -2,14 +2,14 @@
 
 import { useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { myths, ALL_CATEGORIES, ALL_EMOTION_TAGS, ALL_SYMBOL_TAGS } from "@/data/myths";
+// import { myths, ALL_CATEGORIES, ALL_EMOTION_TAGS, ALL_SYMBOL_TAGS } from "@/data/myths";
 import MythCard from "@/components/MythCard";
 import Fuse from "fuse.js";
 
-const fuse = new Fuse(myths, {
-  keys: ["title", "summary", "description", "tags", "origin"],
-  threshold: 0.35,
-});
+// const fuse = new Fuse(myths, {
+//   keys: ["title", "summary", "description", "tags", "origin"],
+//   threshold: 0.35,
+// });
 
 function ExploreInner() {
   const searchParams = useSearchParams();
@@ -27,23 +27,23 @@ function ExploreInner() {
     );
   };
 
-  const results = useMemo(() => {
-    let pool = query.trim()
-      ? fuse.search(query).map((r) => r.item)
-      : myths;
+  // const results = useMemo(() => {
+  //   let pool = query.trim()
+  //     ? fuse.search(query).map((r) => r.item)
+  //     : myths;
 
-    if (activeCategory !== "all") {
-      pool = pool.filter((m) => m.category === activeCategory);
-    }
+  //   if (activeCategory !== "all") {
+  //     pool = pool.filter((m) => m.category === activeCategory);
+  //   }
 
-    if (activeTags.length > 0) {
-      pool = pool.filter((m) =>
-        activeTags.every((tag) => m.tags.includes(tag))
-      );
-    }
+  //   if (activeTags.length > 0) {
+  //     pool = pool.filter((m) =>
+  //       activeTags.every((tag) => m.tags.includes(tag))
+  //     );
+  //   }
 
-    return pool;
-  }, [query, activeCategory, activeTags]);
+  //   return pool;
+  // }, [query, activeCategory, activeTags]);
 
   return (
     <div className="ambient-dark min-h-screen px-6 py-12">
@@ -74,7 +74,7 @@ function ExploreInner() {
           >
             All
           </button>
-          {ALL_CATEGORIES.map((cat) => (
+          {/* {ALL_CATEGORIES.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
@@ -86,14 +86,14 @@ function ExploreInner() {
             >
               {cat.replace("-", " ")}
             </button>
-          ))}
+          ))} */}
         </div>
 
         {/* Tag filter */}
         <div className="mb-8">
           <p className="mb-2 text-xs uppercase tracking-widest text-slate-500">Filter by tag</p>
           <div className="flex flex-wrap gap-2">
-            {[...ALL_EMOTION_TAGS, ...ALL_SYMBOL_TAGS].map((tag) => (
+            {/* {[...ALL_EMOTION_TAGS, ...ALL_SYMBOL_TAGS].map((tag) => (
               <button
                 key={tag}
                 onClick={() => toggleTag(tag)}
@@ -105,7 +105,7 @@ function ExploreInner() {
               >
                 {tag}
               </button>
-            ))}
+            ))} */}
           </div>
           {activeTags.length > 0 && (
             <button
@@ -118,7 +118,7 @@ function ExploreInner() {
         </div>
 
         {/* Results */}
-        <p className="mb-5 text-sm text-slate-500">
+        {/* <p className="mb-5 text-sm text-slate-500">
           {results.length} {results.length === 1 ? "entry" : "entries"} found
         </p>
         {results.length === 0 ? (
@@ -129,7 +129,7 @@ function ExploreInner() {
               <MythCard key={myth.id} myth={myth} />
             ))}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

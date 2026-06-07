@@ -7,9 +7,6 @@ const CATEGORY_LABELS: Record<string, string> = {
   greek: "Greek",
   norse: "Norse",
   japanese: "Japanese",
-  "urban-legend": "Urban Legend",
-  creepypasta: "Creepypasta",
-  "dream-symbol": "Dream Symbol",
   celtic: "Celtic / Slavic",
   egyptian: "Egyptian",
 };
