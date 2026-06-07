@@ -32,14 +32,14 @@ export default function Home() {
             href="/explore"
             className="rounded-full bg-violet-600 px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-violet-500"
           >
-            Explore Myths
+            Explore Dreams
           </Link>
-          {/* <Link
-            href="/graph"
+          <Link
+            href="/map"
             className="rounded-full border border-white/20 px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
           >
-            View Graph
-          </Link> */}
+            View Dream Map
+          </Link>
           <Link
             href="/dream-journal"
             className="rounded-full border border-violet-500/40 px-8 py-3 text-sm font-semibold text-violet-300 transition-colors hover:bg-violet-500/10"
