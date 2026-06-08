@@ -3,18 +3,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { useSession, signOut } from "next-auth/react";
 
 const links = [
   { href: "/", label: "Home" },
   { href: "/explore", label: "Explore" },
   { href: "/map", label: "Map" },
-  // { href: "/graph", label: "Graph" },
   { href: "/dream-journal", label: "Dream Journal" },
   { href: "/profile", label: "Profile" },
 ];
 
 export default function NavBar() {
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#080810]/80 backdrop-blur-md">
@@ -39,6 +40,17 @@ export default function NavBar() {
               {label}
             </Link>
           ))}
+          {session ? <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="rounded-md px-4 py-2 text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white transition-colors"
+          >
+            Sign Out
+          </button> : <Link
+            href="/auth/signin"
+            className="rounded-md px-4 py-2 text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white transition-colors"
+          >
+            Sign In
+          </Link>}
         </div>
       </div>
     </nav>
