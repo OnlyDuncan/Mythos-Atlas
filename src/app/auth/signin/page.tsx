@@ -17,11 +17,29 @@ export default function SignInPage() {
           onClick={() => signIn("google", { callbackUrl: "/dream-journal" })}
           className="w-full flex items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
         >
-          {/* TODO: optionally add a Google icon here */}
           Sign in with Google
         </button>
+
+        {/* Divider */}
+        <div className="flex w-full items-center gap-3">
+          <div className="h-px flex-1 bg-white/10" />
+          <span className="text-xs text-slate-500">or</span>
+          <div className="h-px flex-1 bg-white/10" />
+        </div>
+
+        {/* Demo account */}
+        <button
+          onClick={() => signIn("demo", { callbackUrl: "/dream-journal" })}
+          className="w-full flex items-center justify-center gap-3 rounded-xl border border-violet-500/40 bg-violet-600/10 px-5 py-3 text-sm font-semibold text-violet-300 transition hover:bg-violet-600/20 hover:border-violet-500/60"
+        >
+          ✦ Continue as Demo
+        </button>
+        <p className="text-xs text-slate-500 text-center -mt-3">
+          Explore the full app as a pre-made account — no sign-up required.
+        </p>
 
       </div>
     </div>
   );
 }
+
